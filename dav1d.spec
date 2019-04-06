@@ -6,18 +6,16 @@
 Summary:	AV1 decoder library
 Summary(pl.UTF-8):	Biblioteka dekodera AV1
 Name:		dav1d
-Version:	0.1.0
+Version:	0.2.1
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://download.videolan.org/videolan/dav1d/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	5e14d96fb3dbdb50eb805fa5064a3b4a
+# Source0-md5:	3df9dfc0d131a5bef1853a88c20a18c4
 URL:		https://code.videolan.org/videolan/dav1d
-BuildRequires:	autoconf >= 2.69
-BuildRequires:	automake
 %{?with_apidocs:BuildRequires:	doxygen}
-BuildRequires:	libtool >= 2:2
-BuildRequires:	pcsc-lite-devel
+BuildRequires:	meson >= 0.47.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
@@ -37,7 +35,6 @@ Summary:	Header files for DAV1D library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki DAV1D
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	pcsc-lite-devel
 
 %description devel
 Header files for DAV1D library.
@@ -93,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING NEWS README.md THANKS.md doc/PATENTS
 %attr(755,root,root) %{_bindir}/dav1d
 %attr(755,root,root) %{_libdir}/libdav1d.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdav1d.so.0
+%attr(755,root,root) %ghost %{_libdir}/libdav1d.so.1
 
 %files devel
 %defattr(644,root,root,755)
