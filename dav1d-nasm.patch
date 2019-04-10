@@ -1,0 +1,15 @@
+--- dav1d-0.2.1/meson.build.orig	2019-03-12 22:34:05.000000000 +0100
++++ dav1d-0.2.1/meson.build	2019-04-10 08:00:52.888513528 +0200
+@@ -344,7 +344,11 @@
+         nasm_format = 'elf'
+     endif
+     if host_machine.cpu_family() == 'x86_64'
+-        nasm_format += '64'
++        if get_option('libdir').endswith('libx32')
++           nasm_format += 'x32'
++        else
++           nasm_format += '64'
++        endif
+     else
+         nasm_format += '32'
+     endif
