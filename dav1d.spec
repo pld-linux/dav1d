@@ -62,7 +62,7 @@ Statyczna biblioteka DAV1D.
 Summary:	API documentation for DAV1D library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki DAV1D
 Group:		Documentation
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 API documentation for DAV1D library.
