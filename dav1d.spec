@@ -6,12 +6,12 @@
 Summary:	AV1 decoder library
 Summary(pl.UTF-8):	Biblioteka dekodera AV1
 Name:		dav1d
-Version:	0.9.2
+Version:	1.0.0
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://download.videolan.org/videolan/dav1d/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	fa895eebf5619aaad50bba19a8b99c5c
+# Source0-md5:	424548396e45406fe2f395e248b38121
 Patch0:		%{name}-nasm.patch
 URL:		https://code.videolan.org/videolan/dav1d
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -76,9 +76,10 @@ Dokumentacja API biblioteki DAV1D.
 
 %build
 %meson build \
-	%{!?with_static_libs:--default-library=shared}
+	%{!?with_static_libs:--default-library=shared} \
+	-Denable_docs=true
 
-%ninja_build -C build all %{?with_apidocs:doc/html}
+%ninja_build -C build %{?with_apidocs:doc/html}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -96,7 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING NEWS README.md THANKS.md doc/PATENTS
 %attr(755,root,root) %{_bindir}/dav1d
 %attr(755,root,root) %{_libdir}/libdav1d.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdav1d.so.5
+%attr(755,root,root) %ghost %{_libdir}/libdav1d.so.6
 
 %files devel
 %defattr(644,root,root,755)
