@@ -77,7 +77,7 @@ Dokumentacja API biblioteki DAV1D.
 %build
 %meson build \
 	%{!?with_static_libs:--default-library=shared} \
-	-Denable_docs=true
+	-Denable_docs=%{__true_false apidocs}
 
 %ninja_build -C build %{?with_apidocs:doc/html}
 
