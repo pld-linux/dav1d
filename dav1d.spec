@@ -6,18 +6,18 @@
 Summary:	AV1 decoder library
 Summary(pl.UTF-8):	Biblioteka dekodera AV1
 Name:		dav1d
-Version:	1.1.0
+Version:	1.2.1
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://download.videolan.org/videolan/dav1d/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	e98a56198b2f47dbd27c747e69a9e140
+# Source0-md5:	bc10a9a4e2d63bf22a6b9277f83cf9c1
 Patch0:		%{name}-nasm.patch
 URL:		https://code.videolan.org/videolan/dav1d
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	meson >= 0.49.0
 %ifarch %{ix86} %{x8664} x32
-BuildRequires:	nasm >= 2.13.02
+BuildRequires:	nasm >= 2.14
 %endif
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
