@@ -6,12 +6,12 @@
 Summary:	AV1 decoder library
 Summary(pl.UTF-8):	Biblioteka dekodera AV1
 Name:		dav1d
-Version:	1.4.3
+Version:	1.5.1
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://download.videolan.org/videolan/dav1d/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	c84c685c76e51b98e998db0995bd365c
+# Source0-md5:	0ab0617fd17f0aa380a71bdc4a485315
 Patch0:		%{name}-nasm.patch
 URL:		https://code.videolan.org/videolan/dav1d
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -22,7 +22,7 @@ BuildRequires:	nasm >= 2.14
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -76,16 +76,20 @@ Dokumentacja API biblioteki DAV1D.
 %patch -P0 -p1
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Denable_docs=%{__true_false apidocs}
 
-%ninja_build -C build %{?with_apidocs:doc/html}
+%meson_build
+
+%if %{with apidocs}
+%meson_build doc
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
