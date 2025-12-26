@@ -6,12 +6,12 @@
 Summary:	AV1 decoder library
 Summary(pl.UTF-8):	Biblioteka dekodera AV1
 Name:		dav1d
-Version:	1.5.1
+Version:	1.5.2
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://download.videolan.org/videolan/dav1d/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	0ab0617fd17f0aa380a71bdc4a485315
+# Source0-md5:	d56b4c7d21af9d0c85157c018b86771e
 Patch0:		%{name}-nasm.patch
 URL:		https://code.videolan.org/videolan/dav1d
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -24,6 +24,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	xxHash-devel >= 0.8
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -78,7 +79,8 @@ Dokumentacja API biblioteki DAV1D.
 %build
 %meson \
 	%{!?with_static_libs:--default-library=shared} \
-	-Denable_docs=%{__true_false apidocs}
+	-Denable_docs=%{__true_false apidocs} \
+	-Dxxhash_muxer=enabled
 
 %meson_build
 
@@ -101,12 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING NEWS README.md THANKS.md doc/PATENTS
 %attr(755,root,root) %{_bindir}/dav1d
-%attr(755,root,root) %{_libdir}/libdav1d.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdav1d.so.7
+%{_libdir}/libdav1d.so.*.*.*
+%ghost %{_libdir}/libdav1d.so.7
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libdav1d.so
+%{_libdir}/libdav1d.so
 %{_includedir}/dav1d
 %{_pkgconfigdir}/dav1d.pc
 
@@ -119,5 +121,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%doc build/doc/html/*
+%doc build/doc/html/{search,*.css,*.html,*.js,*.png}
 %endif
