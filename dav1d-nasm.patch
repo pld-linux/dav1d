@@ -1,14 +1,14 @@
---- dav1d-0.2.1/meson.build.orig	2019-03-12 22:34:05.000000000 +0100
-+++ dav1d-0.2.1/meson.build	2019-04-10 08:00:52.888513528 +0200
-@@ -344,7 +344,11 @@
-         nasm_format = 'elf'
-     endif
-     if host_machine.cpu_family() == 'x86_64'
+--- dav1d-1.5.4/meson.build.orig	2026-07-14 08:39:09.000000000 +0200
++++ dav1d-1.5.4/meson.build	2026-09-05 20:21:23.986988164 +0200
+@@ -566,7 +566,11 @@ if is_asm_enabled and host_machine.cpu_f
+             nasm_format = 'aout'
+         endif
+     elif host_machine.cpu_family() == 'x86_64'
 -        nasm_format += '64'
-+        if get_option('libdir').endswith('libx32')
-+           nasm_format += 'x32'
++        if cc.get_define('__ILP32__').strip() == ''
++            nasm_format += '64'
 +        else
-+           nasm_format += '64'
++            nasm_format += 'x32'
 +        endif
      else
          nasm_format += '32'
